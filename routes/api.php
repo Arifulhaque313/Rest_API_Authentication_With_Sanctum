@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Products;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/api',function(){
-    return "Hello API";
+    return Products::get();
 });
+Route::post('/products',function(){
+    return Products::create([
+        'name' => 'books',
+        'slug'=> 'books',
+        'description' => 'Books are availableIn',
+        'price' => '125.6',
+    ]);
+    // echo "Products available";
+});
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
