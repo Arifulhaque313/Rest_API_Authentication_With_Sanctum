@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Products;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -14,7 +15,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products =Products::get();
+        return response()->json($products);
     }
 
     /**
@@ -24,7 +26,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+           
     }
 
     /**
@@ -34,8 +36,18 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $request->validate([
+            'name' => 'required|max:255',
+            'slug' => 'required',
+            'description' => 'required',
+            'price' => 'required|numeric',
+        ]);
+        Products::create(
+            $request->all()
+        );
+
+        return response('Product created successfully');
     }
 
     /**
@@ -46,7 +58,12 @@ class ProductsController extends Controller
      */
     public function show(Products $products)
     {
-        //
+        if(Products::find($products)){
+            return $products;
+        }
+        else{
+            return "Not Found";
+        }
     }
 
     /**
@@ -57,7 +74,7 @@ class ProductsController extends Controller
      */
     public function edit(Products $products)
     {
-        //
+        
     }
 
     /**
@@ -80,6 +97,15 @@ class ProductsController extends Controller
      */
     public function destroy(Products $products)
     {
-        //
+         if($products->delete()){
+            return "Deleted";
+         }
+         else{
+            return "Not Delete";
+         }
+    }
+
+    public function custom(){
+        return "custom method called";
     }
 }
