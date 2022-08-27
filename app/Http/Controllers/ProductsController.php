@@ -56,14 +56,9 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $products)
+    public function show($id)
     {
-        if(Products::find($products)){
-            return $products;
-        }
-        else{
-            return "Not Found";
-        }
+         return Products::find($id);
     }
 
     /**
@@ -84,9 +79,11 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $products)
+    public function update(Request $request, Products $products,$id)
     {
-        //
+        $products = Products::find($id);
+        $products->update($request->all());
+        return $products;
     }
 
     /**
@@ -95,9 +92,9 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function destroy($id)
     {
-         if($products->delete()){
+         if(Products::find($id)->delete()){
             return "Deleted";
          }
          else{
