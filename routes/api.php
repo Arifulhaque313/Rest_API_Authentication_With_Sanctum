@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 // Route::put('/products/show/{products}', 'ProductsController@show');
 // Route::delete('/products/destroy/{products}', 'ProductsController@destroy');
 // Route::get('/products/custom', 'ProductsController@custom');
-// Route::resource('products', 'ProductsController');
+
 
 // public routes 
 Route::post('/register', 'authController@register');
